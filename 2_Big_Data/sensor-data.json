@@ -1,0 +1,25 @@
+{
+    "lightSensor": {
+        "illuminance": "172.0"
+    },
+    "compassSensor": {
+        "x": "0.01",
+        "y": "0.0",
+        "z": "-0.74"
+    },
+    "gyroscopeSensor": {
+        "x": "0.0",
+        "y": "0.0",
+        "z": "0.0"
+    },
+    "gpsSensor": {
+        "alt": "602.9",
+        "lon": "73.87",
+        "lat": "18.45"
+    },
+    "accelerometerSensor": {
+        "x": "-0.11",
+        "y": "0.04",
+        "z": "9.79"
+    }
+}
