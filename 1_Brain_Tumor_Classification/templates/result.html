@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('/static/Brain_background.jpg') no-repeat center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            text-shadow: 2px 2px 4px #000000;
+        }
+        .result {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            font-size: 24px;
+        }
+        .statistics {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        function showMap(location) {
+            window.location.href = `https://www.google.com/maps/search/?api=1&query=${location}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="result">
+        <h1>Prediction Result</h1>
+        <p>{{ prediction }}</p>
+        <div class="statistics">
+            <p>Brain tumors are diagnosed in approximately 25,400 people annually in the United States. The survival rate for malignant brain tumors is around 35.7%.</p>
+        </div>
+        {% if prediction == "Yes Brain Tumor" %}
+            <p>Please select your nearest city for a list of recommended hospitals and doctors:</p>
+            <form action="/location" method="post">
+                <label for="city">Nearest City:</label>
+                <select id="city" name="city">
+                    <option value="Pune">Pune</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Chennai">Chennai</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+        {% if request.form.get('city') %}
+            <h2>Best Hospitals for Brain Tumor Treatment in {{ request.form.get('city') }}:</h2>
+            <ul>
+                {% if request.form.get('city') == 'Pune' %}
+                    <li><strong>Ruby Hall Clinic</strong> - Pune, India<br>Phone: +91 20-66455100</li>
+                    <li><strong>Sahyadri Hospitals</strong> - Pune, India<br>Phone: +91 88888 22222</li>
+                {% elif request.form.get('city') == 'Bangalore' %}
+                    <li><strong>NIMHANS</strong> - Bangalore, India</li>
+                    <li><strong>Manipal Hospitals</strong> - Bangalore, India</li>
+                {% elif request.form.get('city') == 'Mumbai' %}
+                    <li><strong>Tata Memorial Hospital</strong> - Mumbai, India</li>
+                    <li><strong>Kokilaben Dhirubhai Ambani Hospital</strong> - Mumbai, India</li>
+                {% elif request.form.get('city') == 'Delhi' %}
+                    <li><strong>AIIMS</strong> - Delhi, India</li>
+                    <li><strong>Medanta - The Medicity</strong> - Gurgaon, India</li>
+                {% elif request.form.get('city') == 'Hyderabad' %}
+                    <li><strong>Apollo Hospitals</strong> - Hyderabad, India</li>
+                    <li><strong>Yashoda Hospitals</strong> - Hyderabad, India</li>
+                {% elif request.form.get('city') == 'Chennai' %}
+                    <li><strong>Apollo Hospitals</strong> - Chennai, India</li>
+                    <li><strong>Fortis Malar Hospital</strong> - Chennai, India</li>
+                {% endif %}
+            </ul>
+            <button onclick="showMap('{{ request.form.get('city') }}')">View on Google Maps</button>
+        {% endif %}
+        <a href="/" class="btn btn-primary">Go Back</a>
+    </div>
+</body>
+</html>
